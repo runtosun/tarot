@@ -1,12 +1,35 @@
+/**
+ * @fileoverview 타로 카드 선택 애플리케이션의 메인 자바스크립트 파일
+ * @author Your Name
+ */
+
+/**
+ * @type {HTMLElement} 카드 컨테이너 요소
+ */
 const cardContainer = document.getElementById('card-container');
+
+/**
+ * @type {HTMLElement} 선택된 카드 컨테이너 요소
+ */
 const selectedCardsContainer = document.getElementById('selected-cards');
 
-// 카드 배열 생성 부분 수정
+/**
+ * @type {HTMLElement} 카드 펼치기 버튼 요소
+ */
+const fanOutButton = document.getElementById('fanOutButton');
+
+/**
+ * @type {string[]} 카드 이미지 경로 배열
+ */
 const cards = Array.from({ length: 78 }, (_, i) => {
     const cardNumber = i.toString().padStart(2, '0');
     return `images/card_${cardNumber}.jpg`;
 });
 
+/**
+ * 배열을 무작위로 섞는 함수
+ * @param {Array} array - 섞을 배열
+ */
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -14,11 +37,18 @@ function shuffleArray(array) {
     }
 }
 
+/**
+ * 카드 요소를 생성하는 함수
+ * @param {string} src - 카드 이미지 경로
+ * @param {number} index - 카드 인덱스
+ * @param {number} total - 전체 카드 수
+ * @returns {HTMLElement} 생성된 카드 요소
+ */
 function createCard(src, index, total) {
     const card = document.createElement('div');
     card.className = 'card';
     
-    const angle = (index - (total - 1) / 2) * 2.25;  // 각도 범위를 중간 값으로 조정
+    const angle = (index - (total - 1) / 2) * 2.25;
     card.style.setProperty('--angle', `${angle}deg`);
     
     const cardInner = document.createElement('div');
@@ -40,31 +70,64 @@ function createCard(src, index, total) {
     return card;
 }
 
-function initializeCards() {
+/**
+ * 카드를 펼치는 함수
+ */
+function fanOutCards() {
+    fanOutButton.style.display = 'none';
+    cardContainer.innerHTML = '';
+    selectedCardsContainer.innerHTML = '';
+    
     shuffleArray(cards);
     cards.forEach((cardSrc, index) => {
         const card = createCard(cardSrc, index, cards.length);
         card.addEventListener('click', () => selectCard(card));
         cardContainer.appendChild(card);
         
-        // 애니메이션 지연 적용
         setTimeout(() => {
-            card.style.animation = `fanOut 1.5s ease-out forwards ${index * 22}ms`;  // 지연 시간 약간 조정
+            card.style.animation = `fanOut 1.5s ease-out forwards ${index * 22}ms`;
         }, 100);
     });
+    
+    const lastCardDelay = cards.length * 22 + 1500;
+    setTimeout(() => {
+        fanOutButton.textContent = '새롭게 카드 펼치기';
+        fanOutButton.style.display = 'block';
+    }, lastCardDelay);
 }
 
+/**
+ * 카드를 선택하는 함수
+ * @param {HTMLElement} card - 선택된 카드 요소
+ */
 function selectCard(card) {
     card.removeEventListener('click', () => selectCard(card));
     cardContainer.removeChild(card);
     card.style.animation = 'none';
-    card.style.transform = 'none';  // 선택된 카드의 회전 및 위치 초기화
+    card.style.transform = 'none';
+    
+    // 현재 선택된 카드의 수를 계산하여 번호 부여
+    const currentNumber = selectedCardsContainer.children.length + 1;
+    
+    // 번호를 표시할 요소 생성
+    const numberElement = document.createElement('div');
+    numberElement.className = 'card-number';
+    numberElement.textContent = currentNumber;
+    
+    // 번호 요소를 카드의 맨 앞에 추가
+    card.insertBefore(numberElement, card.firstChild);
+    
     card.addEventListener('click', () => flipCard(card));
     selectedCardsContainer.appendChild(card);
 }
 
+/**
+ * 카드를 뒤집는 함수
+ * @param {HTMLElement} card - 뒤집을 카드 요소
+ */
 function flipCard(card) {
     card.classList.toggle('flipped');
 }
 
-initializeCards();
+// 이벤트 리스너 등록
+fanOutButton.addEventListener('click', fanOutCards);
