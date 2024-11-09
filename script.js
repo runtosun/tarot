@@ -80,7 +80,7 @@ function fanOutCards() {
     
     // 메시지 숨기기
     const messageElement = document.getElementById('selection-message');
-    messageElement.textContent = ''; // 메시지 내용 비우기
+    messageElement.style.display = 'none'; // 메시지를 숨김
 
     shuffleArray(cards);
     cards.forEach((cardSrc, index) => {
@@ -115,7 +115,17 @@ function selectCard(card) {
     
     // 메시지 표시
     const messageElement = document.getElementById('selection-message');
-    messageElement.innerHTML = `<span style="font-weight: bold; font-size: 32px;">${currentNumber}</span>장을 선택했습니다`; // 숫자 부분을 굵고 크게 설정
+    messageElement.innerHTML = `
+        <span style="font-weight: bold; font-size: 32px; color: #333;">${currentNumber}</span>장을 선택했습니다.
+        <button id="close-message" class="close-button" style="margin-left: 5px; background: none; border: 2px solid #333; color: #333; font-size: 20px; cursor: pointer; padding: 0 5px; border-radius: 5px;">X</button>
+    `; // 숫자 부분을 굵고 크게 설정
+    
+    messageElement.style.display = 'flex'; // 메시지를 보이도록 설정
+    
+    // X 버튼 클릭 이벤트 추가
+    document.getElementById('close-message').addEventListener('click', () => {
+        messageElement.style.display = 'none'; // 메시지를 숨김
+    });
     
     // 번호를 표시할 요소 생성
     const numberElement = document.createElement('div');
