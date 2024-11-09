@@ -134,7 +134,7 @@ h1, h2 {
     align-items: center;
     justify-content: flex-start;
     gap: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
 }
 
 /* 버튼 스타일 */
@@ -191,7 +191,7 @@ h1 {
     text-align: left; /* 정렬 */
     position: absolute; /* 위치 설정 */
     top: 50%; /* 카드 위치에 맞게 조정 */
-    left: 40%; /* 수평 중앙 정렬 */
+    left: 50%; /* 수평 중앙 정렬 */
     transform: translateX(-50%); /* 중앙 정렬을 위한 변환 */
     z-index: 2; /* 카드 위에 표시되도록 설정 */
 }
