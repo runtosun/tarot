@@ -78,6 +78,10 @@ function fanOutCards() {
     cardContainer.innerHTML = '';
     selectedCardsContainer.innerHTML = '';
     
+    // 메시지 숨기기
+    const messageElement = document.getElementById('selection-message');
+    messageElement.textContent = ''; // 메시지 내용 비우기
+
     shuffleArray(cards);
     cards.forEach((cardSrc, index) => {
         const card = createCard(cardSrc, index, cards.length);
@@ -109,6 +113,10 @@ function selectCard(card) {
     // 현재 선택된 카드의 수를 계산하여 번호 부여
     const currentNumber = selectedCardsContainer.children.length + 1;
     
+    // 메시지 표시
+    const messageElement = document.getElementById('selection-message');
+    messageElement.innerHTML = `<span style="font-weight: bold; font-size: 32px;">${currentNumber}</span>장을 선택했습니다`; // 숫자 부분을 굵고 크게 설정
+    
     // 번호를 표시할 요소 생성
     const numberElement = document.createElement('div');
     numberElement.className = 'card-number';
@@ -117,8 +125,11 @@ function selectCard(card) {
     // 번호 요소를 카드의 맨 앞에 추가
     card.insertBefore(numberElement, card.firstChild);
     
-    card.addEventListener('click', () => flipCard(card));
+    // 선택된 카드 컨테이너에 카드 추가
     selectedCardsContainer.appendChild(card);
+    
+    // 카드 클릭 시 뒤집기 기능 추가
+    card.addEventListener('click', () => flipCard(card));
 }
 
 /**
@@ -126,7 +137,7 @@ function selectCard(card) {
  * @param {HTMLElement} card - 뒤집을 카드 요소
  */
 function flipCard(card) {
-    card.classList.toggle('flipped');
+    card.classList.toggle('flipped'); // 카드의 flipped 클래스를 토글하여 앞면과 뒷면을 전환
 }
 
 // 이벤트 리스너 등록
