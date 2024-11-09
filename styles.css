@@ -186,11 +186,12 @@ h1 {
 #selection-message {
     font-size: 28px; /* 글자 크기 */
     font-weight: bold; /* 글자 굵게 */
-    color: #333;
+    color: #333; /* 글자 색상 */
     margin-top: 0; /* 위쪽 여백을 0으로 설정 */
-    text-align: right; /* 중앙 정렬 */
-    position: fixed; /* 위치 설정 */
-    top: 90%; /* 카드 위치 */
-    right: 5%; /* 카드 위치 */
+    text-align: left; /* 정렬 */
+    position: absolute; /* 위치 설정 */
+    top: 30%; /* 카드 위치에 맞게 조정 */
+    left: 30%; /* 수평 중앙 정렬 */
+    transform: translateX(-50%); /* 중앙 정렬을 위한 변환 */
     z-index: 2; /* 카드 위에 표시되도록 설정 */
 }
