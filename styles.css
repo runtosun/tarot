@@ -189,7 +189,7 @@ h1 {
     color: #333; /* 글자 색상 */
     margin-top: 20; /* 위쪽 여백을 20으로 설정 */
     text-align: left; /* 정렬 */
-    position: absolute; /* 위치 설정 */
+    position: fixed; /* 위치 설정 */
     top: 30%; /* 카드 위치에 맞게 조정 */
     left: 50%; /* 수평 중앙 정렬 */
     transform: translateX(-50%); /* 중앙 정렬을 위한 변환 */
